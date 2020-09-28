@@ -1,7 +1,8 @@
 const INITIAL_STATE = {
     companys: [],
-    companyDetail : [],
-    Search : []
+    companyDetail: [],
+    Search: [],
+    User : []
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -12,16 +13,25 @@ export default (state = INITIAL_STATE, action) => {
                 companys: action.payload
             }
         }
+
         case 'COMPANY_DETAIL': {
             return {
                 ...state,
-                companyDetail : action.payload
+                companyDetail: action.payload
             }
         }
-        case 'SEARCH' : {
+
+        case 'SEARCH': {
             return {
                 ...state,
-                Search : action.payload
+                Search: action.payload
+            }
+        }
+
+        case 'USER': {
+            return {
+                ...state,
+                User: action.payload
             }
         }
 

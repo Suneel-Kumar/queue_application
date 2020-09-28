@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './user.css';
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import { FormGroup, Label, Input, Button } from 'reactstrap';
 import companyMiddleware from '../../redux/Middleware/companyMiddleware';
 import ModalBuyToken from './ModalBuyToken'
 
@@ -11,12 +11,35 @@ const User = () => {
     let history = useHistory();
     const dispatch = useDispatch();
     const [input, setinput] = useState('');
+    const [limit, setlimit] = useState(15);
+    let loading = false;
+
+
     useEffect(() => {
-        dispatch(companyMiddleware.AllCompanies());
-    }, []);
+        dispatch(companyMiddleware.AllCompanies(limit));
+        document.addEventListener('scroll', trackScrolling)
+    }, [limit])
+
+    useEffect(() => {
+        return () => {
+            document.removeEventListener('scroll', trackScrolling)
+        }
+    })
 
     const Search = useSelector(({ companyReducer }) => companyReducer.Search);
     const companys = useSelector(({ companyReducer }) => companyReducer.companys);
+
+    const isBottom = (el) => {
+        return el.getBoundingClientRect().bottom <= window.innerHeight;
+    }
+
+    const trackScrolling = () => {
+        const wrappedElement = document.getElementById('header');
+        if (isBottom(wrappedElement) && !loading) {
+            setlimit(limit + 2);
+            document.removeEventListener('scroll', trackScrolling);
+        }
+    };
 
     // function formatTimeShow(h_24) {
     //     var h = h_24 % 12;
@@ -33,8 +56,8 @@ const User = () => {
     }
 
     return (
-        <div>
-            <div style={{ marginBottom: '40px' }}>
+        <div id="header">
+            <div style={{ marginBottom: '40px' }} >
                 <FormGroup row className="d-flex justify-content-center mb-20">
                     <Label sm={1} size="lg" className="font-weight-bold">Search</Label>
                     <Input type="search" name="search" value={input} placeholder="Search ..." bsSize="lg" className="col-md-4" onChange={(e) => setinput(e.target.value)} />

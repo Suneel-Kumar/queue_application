@@ -22,4 +22,11 @@ export default class CompanyAction {
         }
     }
 
+    static User(list){
+        return {
+            type : "USER",
+            payload : list
+        }
+    }
+
 }

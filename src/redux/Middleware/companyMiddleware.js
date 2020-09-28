@@ -17,19 +17,35 @@ export default class CompanyMiddleware {
         }
     }
 
-    static AllCompanies() {
+    static AllCompanies(limit) {
         return (dispatch) => {
-            firebase.firestore().collection("Company").get().then((companys) => {
-                var list = [];
-                companys.forEach(function (doc) {
-                    list.push(doc.data());
+            if (limit) {
+                firebase.firestore().collection("Company").limit(limit).get().then((companys) => {
+                    var list = [];
+                    companys.forEach(function (doc) {
+                        list.push(doc.data());
+                    });
+                    dispatch(companyAction.companys(list));
+                }, function (error) {
+                    alert(error.message)
                 });
-                dispatch(companyAction.companys(list));
-            }, function (error) {
-                alert(error.message)
-            });
+            }
         }
     }
+
+    // static AllCompanies() {
+    //     return (dispatch) => {
+    //         firebase.firestore().collection("Company").get().then((companys) => {
+    //             var list = [];
+    //             companys.forEach(function (doc) {
+    //                 list.push(doc.data());
+    //             });
+    //             dispatch(companyAction.companys(list));
+    //         }, function (error) {
+    //             alert(error.message)
+    //         });
+    //     }
+    // }
 
     static addCompany(data) {
         return (dispatch) => {
@@ -73,15 +89,15 @@ export default class CompanyMiddleware {
 
     static searchCompany(input) {
         return (dispatch) => {
-            firebase.firestore().collection('Company').get().then((user) => {
+            firebase.firestore().collection('Company').where("name", "==", input).get().then((user) => {
                 var list = [];
                 user.forEach(function (doc) {
                     list.push(doc.data());
                 });
-                const searchedCompany = list.filter((item) => {
-                    return item.name.toLowerCase().substring(0, input.toLowerCase()).indexOf(input.toLowerCase()) !== -1;
-                })
-                dispatch(companyAction.Search(searchedCompany))
+                // const searchedCompany = list.filter((item) => {
+                //     return item.name.toLowerCase().substring(0, input.toLowerCase()).indexOf(input.toLowerCase()) !== -1;
+                // })
+                dispatch(companyAction.Search(list))
             })
         }
     }
@@ -99,5 +115,20 @@ export default class CompanyMiddleware {
             })
         }
     }
-    
+
+    static getCustomers(id) {
+        return (dispatch) => {
+            firebase.firestore().collection('Users').where("companyId", "==", parseInt(id)).get().then((res) => {
+                let list = [];
+                res.forEach(element => {
+                    list.push(element.data())
+                });
+                
+                dispatch(companyAction.User(list))
+            })
+        }
+    }
+
+
+
 }
