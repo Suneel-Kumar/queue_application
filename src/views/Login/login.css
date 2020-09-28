@@ -1,0 +1,40 @@
+.box{
+    width: 30%;
+    margin: 0 auto;
+    margin-top: 80px;
+}
+
+.container{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.company{
+    display: flex;
+    justify-content: center;
+    margin: 100px;
+    margin-top: 40px;
+    height: 60px;
+    align-items: center;
+    background-color: grey;
+    color: whitesmoke;
+}
+
+.table{
+   width: 100px;
+   height: 120px;
+   padding: 0px 120px 0px 120px;
+   margin-top: -10px;
+}
+
+.lftBtn{
+    /* float: right; */
+    position: fixed;
+    /* bottom: 0; */
+    bottom: 80px;
+    right: 80px;
+    /* margin-right: 120px;
+    margin-top: 20px; */
+}

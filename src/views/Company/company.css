@@ -1,0 +1,31 @@
+.box{
+    /* width: 400px;
+    height: 500px;
+    background-color: black;
+    position: absolute;
+    left: 100px;
+    top: 20px; */
+    /* background-color: red; */
+    width: 100%;
+    padding: 30px;
+    
+}
+.box img{
+    width: 400px;
+    height: 500px;
+}
+
+.img{
+    float: left;
+    margin: 20px;
+}
+
+.right{
+    float: center;
+    margin: 20px;
+    padding: 20px;
+    /* position: absolute; */
+}
+.right > h2{
+    padding: 10px;
+}
