@@ -29,6 +29,7 @@ export default class CompanyMiddleware {
                 }, function (error) {
                     alert(error.message)
                 });
+            
             }
         }
     }
@@ -123,7 +124,7 @@ export default class CompanyMiddleware {
                 res.forEach(element => {
                     list.push(element.data())
                 });
-                
+
                 dispatch(companyAction.User(list))
             })
         }
