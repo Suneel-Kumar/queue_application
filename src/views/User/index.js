@@ -18,6 +18,9 @@ const User = () => {
     useEffect(() => {
         dispatch(companyMiddleware.AllCompanies(limit));
         document.addEventListener('scroll', trackScrolling);
+        return () => {
+            document.removeEventListener('scroll', trackScrolling)
+        }
     }, [limit])
 
     // console.log(limit, "limit")
@@ -38,9 +41,8 @@ const User = () => {
     }
 
     const trackScrolling = () => {
-        // loading = true;
         const wrappedElement = document.getElementById("header");
-        if (isBottom(wrappedElement) ) {
+        if (isBottom(wrappedElement)) {
             setlimit(limit + 2);
             document.removeEventListener('scroll', trackScrolling);
         }

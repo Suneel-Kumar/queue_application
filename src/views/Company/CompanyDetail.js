@@ -5,36 +5,32 @@ import './company.css';
 import { useParams } from 'react-router-dom';
 import ModalToken from './ModalToken';
 import { Button } from 'reactstrap';
-import CustomerModal from './CustomerModal'
+import CustomerModal from './CustomerModal';
 
 const CompanyDetail = () => {
-
     let { companyId } = useParams();
     const dispatch = useDispatch();
 
     const companyData = useSelector(({ companyReducer }) => companyReducer.companyDetail);
-    let [counter, setcounter] = useState(0);
+
+    const [counter, setcounter] = useState(0);
 
     const updateToken = () => {
-        if (companyData.token > counter) {
-            setcounter(counter + 1)
+        if (+(companyData.token) > companyData.CurrentToken) {
+            let token = companyData.CurrentToken + 1;
+            setcounter(token);
         } else {
             alert('Token Ended')
         }
-        setTimeout(() => {
-            if (counter == companyData.token) {
-                clearInterval(counter)
-            } else {
-                counter = counter + 1
-                setcounter(counter)
-            }
-        }, companyData.timeInmili)
+        // setTimeout(() => {
+        //     if (counter == companyData.token) {
+        //         clearInterval(counter)
+        //     } else {
+        //         counter = counter + 1
+        //         setcounter(counter)
+        //     }
+        // }, companyData.timeInmili)
     }
-
-    useEffect(() => {
-        dispatch(companyMiddleware.CompanyId(companyId));
-        tokenReset();
-    }, [updateToken])
 
     const tokenReset = () => {
         if (companyData.currentDate) {
@@ -47,8 +43,33 @@ const CompanyDetail = () => {
         else { return }
     }
 
+    useEffect(() => {
+        dispatch(companyMiddleware.CompanyId(companyId));
+        tokenReset();
+    }, [])
 
 
+    useEffect(() => {
+        dispatch(companyMiddleware.updateTokenInFirebase(counter, companyId))
+        dispatch(companyMiddleware.CompanyId(companyId));
+    }, [counter])
+
+    // useEffect(() => {
+    //     const timer = setInterval(() => {
+    //         if (companyData) {
+    //             console.log(companyData.token, "*****", companyData.CurrentToken)
+    //         }
+    //         // if (+(companyData.token) > companyData.CurrentToken) {
+    //         //     let token = companyData.CurrentToken + 1;
+    //         //     setcounter(token);
+    //         // } else {
+    //         //     alert('Token Ended')
+    //         // }
+    //     }, 5000);
+    //     return () => {
+    //         clearInterval(timer)
+    //     }
+    // }, [])
 
     return (
         <div className="box">
@@ -61,7 +82,7 @@ const CompanyDetail = () => {
                 <h2>Address : {companyData.address}</h2>
                 <h2>Office Time : {companyData.time}</h2>
                 <h2>Today's Token : {companyData.token ? companyData.token : 0}</h2>
-                {companyData.token ? <div><h2> Current token : {counter}</h2><Button color="primary" onClick={updateToken}>Done</Button></div>
+                {companyData.token ? <div><h2> Current token : {companyData.CurrentToken}</h2><Button color="primary" onClick={updateToken}>Done</Button></div>
                     : <div className="btn"><ModalToken companyId={companyId} /></div>
                 }
                 <div className="btn">

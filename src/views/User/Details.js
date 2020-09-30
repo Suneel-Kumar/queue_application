@@ -30,6 +30,7 @@ const Details = () => {
                 <h3>Name : {company.name}</h3>
                 <h3>Since : {company.since}</h3>
                 <h3>Office Time : {company.time}</h3>
+                {company.token ? <div><h3>Total Token : {company.token}</h3>Current Token : {company.CurrentToken}<h3></h3></div> : null}
             </div>
         </div>
     )

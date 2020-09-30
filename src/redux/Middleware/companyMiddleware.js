@@ -1,6 +1,7 @@
 import firebase from '../../config/config';
 import companyAction from '../Action/companyAction';
 
+
 export default class CompanyMiddleware {
 
     static getCompany(id) {
@@ -29,7 +30,7 @@ export default class CompanyMiddleware {
                 }, function (error) {
                     alert(error.message)
                 });
-            
+
             }
         }
     }
@@ -76,8 +77,11 @@ export default class CompanyMiddleware {
     static companyTokenAdd(obj) {
         const { companyId, timeET, token, currentDate } = obj
         return (dispatch) => {
-            firebase.firestore().collection('Company').doc(companyId).update({ timeET, token, currentDate }).then(function () {
-                alert('Token Added')
+            firebase.firestore().collection('Company').doc(companyId).update({ timeET, token, currentDate }).then(() => {
+                alert("Token", "Token Added", "success");
+                firebase.firestore().collection('Company').doc(companyId).get().then((user) => {
+                    dispatch(companyAction.CompanyDetail(user.data()))
+                })
             })
         }
     }
@@ -131,5 +135,12 @@ export default class CompanyMiddleware {
     }
 
 
+    static updateTokenInFirebase(CurrentToken, companyId) {
+        return (dispatch) => {
+            firebase.firestore().collection("Company").doc(companyId).update({ CurrentToken }).then(function () {
+                // console.log("Token Updated Successfully");
+            })
+        }
+    }
 
 }
