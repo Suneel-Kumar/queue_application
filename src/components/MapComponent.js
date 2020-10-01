@@ -9,8 +9,8 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) => {
 
     useEffect(() => {
         if (company !== undefined) {
-            const lat = company.lt;
-            const lng = company.ln;
+            const lat = +(company.lt);
+            const lng = +(company.ln);
             setCoords({ lat, lng });
         }
     }, [company])
@@ -19,14 +19,14 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) => {
     const [isMarkerShown, setMarkerShown] = useState(true);
 
     return (
-                <GoogleMap
-                    defaultZoom={18}
-                    defaultCenter={{ lat: 24.903016, lng: 67.1140284 }}
-                >
-                    {isMarkerShown
-                        && <Marker position={coordinates}
-                            draggable={false} />}
-                </GoogleMap>
+        <GoogleMap
+            defaultZoom={18}
+            defaultCenter={{ lat: 24.903016, lng: 67.1140284 }}
+        >
+            {isMarkerShown
+                && <Marker position={coordinates}
+                    draggable={false} />}
+        </GoogleMap>
     )
 }
 ))
