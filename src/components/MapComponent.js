@@ -9,13 +9,13 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) => {
 
     useEffect(() => {
         if (company !== undefined) {
-            const lat = +(company.lt);
-            const lng = +(company.ln);
+            const lat = Number(company.lt);
+            const lng = Number(company.ln);
             setCoords({ lat, lng });
         }
     }, [company])
 
-    const [coordinates, setCoords] = useState({});
+    const [coordinates, setCoords] = useState({ lat: 24.903016, lng: 67.1140284 });
     const [isMarkerShown, setMarkerShown] = useState(true);
 
     return (
@@ -25,7 +25,7 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) => {
         >
             {isMarkerShown
                 && <Marker position={coordinates}
-                    draggable={false} />}
+                />}
         </GoogleMap>
     )
 }

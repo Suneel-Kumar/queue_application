@@ -13,11 +13,11 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) => {
     //   lat: event.latLng.lat(),
     //   lng: event.latLng.lng()
     // })
-    // fetch(`https://api.foursquare.com/v2/venues/explore?client_id=CP5EY2IYST5EHNSPC30K3WLIHSFYHRU4ALMW1TQMVCFUODYI&
-    // client_secret=3XT23BNJOPZZAU15OTBGKP1D1MUSI1ZNWTMSWCZZPZ4OAIYG&v=20180323&ll=${coordinates.lat}, ${coordinates.lng}&`).then((res) => res.json())
-    // // setTimeout(() => {
-    // //   setMarkerShown(true)
-    // // }, 2000)
+    fetch(`https://api.foursquare.com/v2/venues/explore?client_id=CP5EY2IYST5EHNSPC30K3WLIHSFYHRU4ALMW1TQMVCFUODYI&
+    client_secret=3XT23BNJOPZZAU15OTBGKP1D1MUSI1ZNWTMSWCZZPZ4OAIYG&v=20180323&ll=${coordinates.lat}, ${coordinates.lng}&`).then((res) => res.json())
+    // setTimeout(() => {
+    //   setMarkerShown(true)
+    // }, 2000)
     const lt = event.latLng.lat()
     const ln = event.latLng.lng()
 
@@ -42,4 +42,4 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) => {
 }
 ))
 
-export default MyMapComponent
+export default MyMapComponent;

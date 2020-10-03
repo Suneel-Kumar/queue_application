@@ -13,11 +13,3 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 export default firebase;
-
-// function getCompanies(limit) {
-//     return firebase.firestore().collection('Company').orderBy().limit(limit).get();
-// }
-
-// export {
-//     getCompanies
-// }

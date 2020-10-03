@@ -114,7 +114,7 @@ export default class CompanyMiddleware {
                 response.ref.getDownloadURL().then(function (url) {
                     user.file = url;
                     firebase.firestore().collection("Users").doc(`${user.UId}`).set(user).then(() => {
-                        alert("Please Wait for Response");
+                        alert("Please Wait for Response");  
                     }).catch((e) => alert(e.message))
                 })
             })
@@ -139,6 +139,32 @@ export default class CompanyMiddleware {
         return (dispatch) => {
             firebase.firestore().collection("Company").doc(companyId).update({ CurrentToken }).then(function () {
                 // console.log("Token Updated Successfully");
+            })
+        }
+    }
+
+    static TokenDisAllow({ companyId, Allow }) {
+        return (dispatch) => {
+            firebase.firestore().collection("Company").doc(companyId).update({ Allow }).then(() => {
+                alert("Disallowed Todays Token");
+            })
+        }
+    }
+
+    static notification({ companyId, counter }) {
+        console.log(counter, "counter");
+        return (dispatch) => {
+            firebase.firestore().collection("Users").where("companyId", "==", +(companyId)).get().then(function (res) {
+                let list = [];
+                res.forEach(user => {
+                    list.push(user.data())
+                });
+                let nextUser = list[counter];
+                Notification.requestPermission().then(() => {
+                    var title = "Notify";
+                    var body = "You just left 10 min";
+                    var notification = new Notification(title, { body });
+                })
             })
         }
     }

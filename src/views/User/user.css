@@ -16,7 +16,7 @@
     /* background-color: red; */
     /* display: inline-block; */
     float: left;
-    width: 40%;
+    width: 35% !important; 
     height: 650px;
     border-radius: 8px;
     margin: 70px;

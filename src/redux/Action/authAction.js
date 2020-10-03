@@ -15,6 +15,4 @@ export default class AuthAction {
             type: UNSET_USER
         }
     }
-
-
 }

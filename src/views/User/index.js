@@ -12,8 +12,6 @@ const User = () => {
     const dispatch = useDispatch();
     const [input, setinput] = useState('');
     const [limit, setlimit] = useState(5);
-    // const [loading, setloading] = useState(false);
-    // let loading = false
 
     useEffect(() => {
         dispatch(companyMiddleware.AllCompanies(limit));
@@ -23,8 +21,6 @@ const User = () => {
         }
     }, [limit])
 
-    // console.log(limit, "limit")
-    // console.log(loading, "loading");
 
     useEffect(() => {
         document.addEventListener('scroll', trackScrolling)

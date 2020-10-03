@@ -23,7 +23,7 @@
 }
 
 .table{
-   width: 100px;
+   width: 100% !important;
    height: 120px;
    padding: 0px 120px 0px 120px;
    margin-top: -10px;

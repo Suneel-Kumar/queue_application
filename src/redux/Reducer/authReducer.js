@@ -1,7 +1,7 @@
-import { USER_STATUS, LOADING,  UNSET_USER} from '../constants'
+import { USER_STATUS, LOADING, UNSET_USER, NOTIFICATION} from '../constants'
 const INITIAL_STATE = {
     user: {},
-    loading: false
+    loading: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -23,6 +23,7 @@ export default (state = INITIAL_STATE, action) => {
                 ...state,
                 user: action.payload,
             };
+
 
         default:
             return state;

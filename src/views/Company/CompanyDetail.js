@@ -4,7 +4,7 @@ import companyMiddleware from '../../redux/Middleware/companyMiddleware'
 import './company.css';
 import { useParams } from 'react-router-dom';
 import ModalToken from './ModalToken';
-import { Button } from 'reactstrap';
+import { Button, Input } from 'reactstrap';
 import CustomerModal from './CustomerModal';
 
 const CompanyDetail = () => {
@@ -14,14 +14,22 @@ const CompanyDetail = () => {
     const companyData = useSelector(({ companyReducer }) => companyReducer.companyDetail);
 
     const [counter, setcounter] = useState(0);
+    const [isChecked, setIsChecked] = useState(false);
+
+    const handleCheckedChange = (e) => {
+        setIsChecked(!isChecked);
+        dispatch(companyMiddleware.TokenDisAllow({ companyId, Allow: isChecked }))
+    }
 
     const updateToken = () => {
         if (+(companyData.token) > companyData.CurrentToken) {
             let token = companyData.CurrentToken + 1;
             setcounter(token);
+            // dispatch(companyMiddleware.notification(companyId));
         } else {
             alert('Token Ended')
         }
+
         // setTimeout(() => {
         //     if (counter == companyData.token) {
         //         clearInterval(counter)
@@ -48,10 +56,10 @@ const CompanyDetail = () => {
         tokenReset();
     }, [])
 
-
     useEffect(() => {
         dispatch(companyMiddleware.updateTokenInFirebase(counter, companyId))
         dispatch(companyMiddleware.CompanyId(companyId));
+        dispatch(companyMiddleware.notification({ companyId, counter }))
     }, [counter])
 
     // useEffect(() => {
@@ -82,6 +90,15 @@ const CompanyDetail = () => {
                 <h2>Address : {companyData.address}</h2>
                 <h2>Office Time : {companyData.time}</h2>
                 <h2>Today's Token : {companyData.token ? companyData.token : 0}</h2>
+                <div>
+                    {
+                        companyData.token ? <div></div> :
+                            <div>
+                                <input type="checkbox" checked={isChecked} onChange={handleCheckedChange} />
+                                <label style={{ margin: '9px', fontWeight: 'bold' }}>Disallow Today's Token </label>
+                            </div>
+                    }
+                </div>
                 {companyData.token ? <div><h2> Current token : {companyData.CurrentToken}</h2><Button color="primary" onClick={updateToken}>Done</Button></div>
                     : <div className="btn"><ModalToken companyId={companyId} /></div>
                 }
@@ -92,5 +109,6 @@ const CompanyDetail = () => {
         </div>
     )
 }
+
 
 export default CompanyDetail;
