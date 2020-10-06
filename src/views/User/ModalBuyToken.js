@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux'
+import { useParams } from 'react-router-dom';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap';
 import companyMiddleware from '../../redux/Middleware/companyMiddleware';
 
@@ -12,10 +13,10 @@ const ModalExample = (props) => {
     const [email, setemail] = useState('');
     const [file, setfile] = useState('')
     const toggle = () => setModal(!modal);
-    const { buttonLabel, className, id: companyId } = props;
+    const { buttonLabel, className, companyId } = props;
 
     const Save = () => {
-        const userInfo = { companyId, name, email, file, UId : Date.now() }
+        const userInfo = { companyId, name, email, file, UId: Date.now() }
         dispatch(companyMiddleware.UserInfo(userInfo));
         setModal(!modal);
     }

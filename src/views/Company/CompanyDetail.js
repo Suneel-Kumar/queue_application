@@ -59,7 +59,7 @@ const CompanyDetail = () => {
     useEffect(() => {
         dispatch(companyMiddleware.updateTokenInFirebase(counter, companyId))
         dispatch(companyMiddleware.CompanyId(companyId));
-        dispatch(companyMiddleware.notification({ companyId, counter }))
+        // dispatch(companyMiddleware.notification({ companyId, counter }))
     }, [counter])
 
     // useEffect(() => {

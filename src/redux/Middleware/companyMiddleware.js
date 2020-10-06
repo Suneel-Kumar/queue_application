@@ -1,7 +1,6 @@
 import firebase from '../../config/config';
 import companyAction from '../Action/companyAction';
 
-
 export default class CompanyMiddleware {
 
     static getCompany(id) {
@@ -68,7 +67,7 @@ export default class CompanyMiddleware {
 
     static CompanyId(id) {
         return (dispatch) => {
-            firebase.firestore().collection('Company').doc(id).get().then((user) => {
+            firebase.firestore().collection('Company').doc(id).onSnapshot((user) => {
                 dispatch(companyAction.CompanyDetail(user.data()))
             })
         }
@@ -113,6 +112,7 @@ export default class CompanyMiddleware {
             storageRef.put(user.file).then(function (response) {
                 response.ref.getDownloadURL().then(function (url) {
                     user.file = url;
+                    console.log(user)
                     firebase.firestore().collection("Users").doc(`${user.UId}`).set(user).then(() => {
                         alert("Please Wait for Response");  
                     }).catch((e) => alert(e.message))
@@ -123,7 +123,7 @@ export default class CompanyMiddleware {
 
     static getCustomers(id) {
         return (dispatch) => {
-            firebase.firestore().collection('Users').where("companyId", "==", parseInt(id)).get().then((res) => {
+            firebase.firestore().collection("Users").where("companyId", "==", id).get().then((res) => {
                 let list = [];
                 res.forEach(element => {
                     list.push(element.data())
@@ -151,22 +151,22 @@ export default class CompanyMiddleware {
         }
     }
 
-    static notification({ companyId, counter }) {
-        console.log(counter, "counter");
-        return (dispatch) => {
-            firebase.firestore().collection("Users").where("companyId", "==", +(companyId)).get().then(function (res) {
-                let list = [];
-                res.forEach(user => {
-                    list.push(user.data())
-                });
-                let nextUser = list[counter];
-                Notification.requestPermission().then(() => {
-                    var title = "Notify";
-                    var body = "You just left 10 min";
-                    var notification = new Notification(title, { body });
-                })
-            })
-        }
-    }
+    // static notification({ companyId, counter }) {
+    //     console.log(counter, "counter");
+    //     return (dispatch) => {
+    //         firebase.firestore().collection("Users").where("companyId", "==", +(companyId)).get().then(function (res) {
+    //             let list = [];
+    //             res.forEach(user => {
+    //                 list.push(user.data())
+    //             });
+    //             let nextUser = list[counter];
+    //             Notification.requestPermission().then(() => {
+    //                 var title = "Notify";
+    //                 var body = "You just left 10 min";
+    //                 var notification = new Notification(title, { body });
+    //             })
+    //         })
+    //     }
+    // }
 
 }
