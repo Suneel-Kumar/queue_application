@@ -1,14 +1,14 @@
 import * as firebase from 'firebase'
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCvuIZRNZ3g8Frf-hof40rhwzkII_3owes",
-    authDomain: "financebakerz-1.firebaseapp.com",
-    databaseURL: "https://financebakerz-1.firebaseio.com",
-    projectId: "financebakerz-1",
-    storageBucket: "financebakerz-1.appspot.com",
-    messagingSenderId: "131703511395",
-    appId: "1:131703511395:web:04c19a8f47c2d0d9959b56",
-    measurementId: "G-L68ZNF3Z1N"
+    apiKey: "AIzaSyDmIu0X5eD1KlGQ3IgoO5zHQQBtx3d5-8c",
+    authDomain: "queue-aps.firebaseapp.com",
+    databaseURL: "https://queue-aps.firebaseio.com",
+    projectId: "queue-aps",
+    storageBucket: "queue-aps.appspot.com",
+    messagingSenderId: "672559411239",
+    appId: "1:672559411239:web:c4e95abd64117a7683de02",
+    measurementId: "G-CXWSH9ZBP5"
 };
 
 firebase.initializeApp(firebaseConfig);

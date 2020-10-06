@@ -28,7 +28,6 @@ const Login = () => {
                 <div className="text-center p-3">Or Continue With Your Social account</div>
             </Form>
             <FacebookLoginButton onClick={loginWithFB} />
-
         </div>
     )
 }

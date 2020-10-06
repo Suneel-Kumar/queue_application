@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap';
 import companyMiddleware from '../../redux/Middleware/companyMiddleware';
+import firebase from '../../config/config'
 
 const ModalExample = (props) => {
 
@@ -11,16 +12,27 @@ const ModalExample = (props) => {
     const [modal, setModal] = useState(false);
     const [name, setname] = useState('');
     const [email, setemail] = useState('');
-    const [file, setfile] = useState('')
+    const [file, setfile] = useState('');
+    const [tokenNum, settokenNum] = useState(0)
     const toggle = () => setModal(!modal);
     const { buttonLabel, className, companyId } = props;
 
     const Save = () => {
-        const userInfo = { companyId, name, email, file, UId: Date.now() }
+        const userInfo = { companyId, name, email, file, UId: Date.now(),  tokenNum}
         dispatch(companyMiddleware.UserInfo(userInfo));
         setModal(!modal);
     }
 
+    useEffect(() => {
+        tokenNumber()
+    }, [])
+
+    const tokenNumber = async () => {
+        await firebase.firestore().collection("Company").doc(companyId).get().then((user) => {
+            settokenNum(user.data().tokenNumber + 1);
+        })
+    }
+    
     return (
         <div>
             <Button onClick={toggle}>Buy Token</Button>

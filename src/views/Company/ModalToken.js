@@ -15,7 +15,7 @@ const ModalExample = (props) => {
     function getData() {
         // const timeInmili = timeET * 60000;
         const currentDate = new Date().getDate();
-        const obj = { companyId, token, timeET, currentDate }
+        const obj = { companyId, token, timeET, currentDate, tokenNumber : 0 }
         dispatch(companyMiddleware.companyTokenAdd(obj))
         setModal(!modal);
     }

@@ -82,14 +82,8 @@ const User = () => {
                                     <h3>Timing : {time}</h3>
                                     {token ? <div>
                                         <h3>Token : {token}</h3>
-                                        <div className="description" style={{ display: 'flex', justifyContent: 'center' }}>
-                                            <ModalBuyToken id={uid} />
-                                            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                                <Button onClick={() => seeDetails(uid)}>See Details</Button>
-                                            </div>
-                                        </div>
-                                    </div> : <div><Button disabled>Buy Token</Button> &nbsp;
-                                <Button onClick={() => seeDetails(uid)}>See Details</Button></div>}
+                                        <Button onClick={() => seeDetails(uid)}>See Details</Button>
+                                    </div> : <Button onClick={() => seeDetails(uid)}>See Details</Button>}
                                 </div>
                             </div>
                         </div>
@@ -108,14 +102,8 @@ const User = () => {
                                     <h3>Timing : {time}</h3>
                                     {token ? <div>
                                         <h3>Token : {token}</h3>
-                                        <div className="description" style={{ display: 'flex', justifyContent: 'center' }}>
-                                            <ModalBuyToken id={uid} />
-                                            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                                <Button onClick={() => seeDetails(uid)}>See Details</Button>
-                                            </div>
-                                        </div>
-                                    </div> : <Button disabled>Buy Token</Button>}
-                                    <Button onClick={() => seeDetails(uid)}>See Details</Button>
+                                        <Button onClick={() => seeDetails(uid)}>See Details</Button>
+                                    </div> : <Button onClick={() => seeDetails(uid)}>See Details</Button>}
                                 </div>
                             </div>
                         </div>

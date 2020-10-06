@@ -29,7 +29,6 @@ export default class CompanyMiddleware {
                 }, function (error) {
                     alert(error.message)
                 });
-
             }
         }
     }
@@ -55,7 +54,8 @@ export default class CompanyMiddleware {
                 storegeRef.put(data.certificate).on('state_changed', snap => { }, err => { },
                     () => storegeRef.getDownloadURL().then(downloadableUrl => {
                         data.certificate = downloadableUrl;
-                        firebase.firestore().collection('Company').doc(`${data.uid}`).set(data).then(() => {
+
+                        firebase.firestore().collection("Company").doc(String(data.uid)).set(data).then(() => {
                             alert("Companies Added Successfully");
                         }).catch((e) => {
                             alert("Error", e.message);
@@ -74,10 +74,10 @@ export default class CompanyMiddleware {
     }
 
     static companyTokenAdd(obj) {
-        const { companyId, timeET, token, currentDate } = obj
+        const { companyId, timeET, token, currentDate , tokenNumber } = obj
         return (dispatch) => {
-            firebase.firestore().collection('Company').doc(companyId).update({ timeET, token, currentDate }).then(() => {
-                alert("Token", "Token Added", "success");
+            firebase.firestore().collection('Company').doc(companyId).update({ timeET, token, currentDate, tokenNumber }).then(() => {
+                alert("Token Added", "success");
                 firebase.firestore().collection('Company').doc(companyId).get().then((user) => {
                     dispatch(companyAction.CompanyDetail(user.data()))
                 })
@@ -98,23 +98,20 @@ export default class CompanyMiddleware {
                 user.forEach(function (doc) {
                     list.push(doc.data());
                 });
-                // const searchedCompany = list.filter((item) => {
-                //     return item.name.toLowerCase().substring(0, input.toLowerCase()).indexOf(input.toLowerCase()) !== -1;
-                // })
                 dispatch(companyAction.Search(list))
             })
         }
     }
 
     static UserInfo(user) {
+        console.log("User", user);
         return (dispatch) => {
             const storageRef = firebase.storage().ref(`User/${user.UId}`);
             storageRef.put(user.file).then(function (response) {
                 response.ref.getDownloadURL().then(function (url) {
                     user.file = url;
-                    console.log(user)
                     firebase.firestore().collection("Users").doc(`${user.UId}`).set(user).then(() => {
-                        alert("Please Wait for Response");  
+                        alert("Please Wait for Response");
                     }).catch((e) => alert(e.message))
                 })
             })
